@@ -1,4 +1,4 @@
-"use-client";
+"use client";
 
 import { useEffect, useState } from "react";
 
@@ -16,21 +16,21 @@ export default function Home() {
 
   useEffect(() => {
     fetch("http://localhost:8000/api/products")
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Could not laod product");
-      }
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Could not load products");
+        }
+        return response.json();
+      })
+      .then((data) => setProducts(data.product))
+      .catch(() => {
+        setError("Could not connect to RelayOps API. Is the backend running?");
+      })
+      .finally(() => setLoading(false));
+  }, []);
 
-      return response.json();
-    })
-    .then((data) => setProducts(data.products))
-    .catch(() => {
-      setError("Could not connect to RelayOps API, Is backend running?")
-    })
-    .finally(() => setLoading(false));
-  }, [])
 
-   return (
+  return (
     <main className="min-h-screen bg-slate-100 p-6 text-slate-900 md:p-10">
       <div className="mx-auto max-w-5xl">
         <header className="mb-8">
